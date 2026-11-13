@@ -18,6 +18,10 @@ def main() -> None:
     # Exactly the joke text, UTF-8, no trailing newline.
     with open(OUTPUT_PATH, "w", encoding="utf-8", newline="") as f:
         f.write(JOKE)
+    # Read back and verify: what landed on disk must be exactly the joke,
+    # so a partial or mangled write fails loudly instead of silently.
+    with open(OUTPUT_PATH, "r", encoding="utf-8", newline="") as f:
+        assert f.read() == JOKE, "entry.txt does not match the intended joke"
 
 
 if __name__ == "__main__":
